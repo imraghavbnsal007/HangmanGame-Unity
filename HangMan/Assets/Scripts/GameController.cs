@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 
 public class GameController : MonoBehaviour
 {
@@ -15,13 +16,15 @@ public class GameController : MonoBehaviour
     public GameObject wintext;
     public GameObject losetext;
     private bool gameEnd = false;
+    public GameObject replayButton;
 
-    private string[] wordsLocal = {"RAGHAV BANSAL", "AYAN", "LOVISH", "KHUSHBOO", "AAYUSH"};
+    // private string[] wordsLocal = {"RAGHAV BANSAL", "AYAN", "LOVISH", "KHUSHBOO", "AAYUSH"};
+    private string[] words = File.ReadAllLines(@"C:\Users\ragha\OneDrive\Documents\Unity Projects\HangmanGame-Unity\HangMan\Assets\Text\Words.txt");
     // Start is called before the first frame update
     void Start()
     {   
         
-        chosenWord = wordsLocal[Random.Range(0,wordsLocal.Length)];
+        chosenWord = words[Random.Range(0,words.Length)];
         
         for(int i =0; i < chosenWord.Length; i++)
         {
@@ -92,11 +95,13 @@ public class GameController : MonoBehaviour
             if (fails == hangman.Length)
             {
                 losetext.SetActive(true);
+                replayButton.SetActive(true);
                 gameEnd = true;
             }
             if(!hiddenWord.Contains("_"))
             {
                 wintext.SetActive(true);
+                replayButton.SetActive(true);
                 gameEnd = true;
             }
         }
